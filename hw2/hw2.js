@@ -9,8 +9,9 @@ const gl = canvas.getContext('webgl2');
 let shader;   // shader program
 let vao;      // vertex array object
 let overlay;
+let offsetSquare = [0.0, 0.0];
 
-let vertices = new Float32Array([
+const initVertices = new Float32Array([
     -0.1, -0.1, 0.0,  // Bottom left
     0.1, -0.1, 0.0,  // Bottom right
     0.1,  0.1, 0.0,  // Top right
@@ -64,7 +65,7 @@ function setupBuffers() {
 
     const vbo = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, initVertices, gl.STATIC_DRAW);
 
     shader.setAttribPointer('aPos', 3, gl.FLOAT, false, 0, 0);
 }
@@ -72,13 +73,12 @@ function setupBuffers() {
 function render() {
     gl.clear(gl.COLOR_BUFFER_BIT);
 
-    let color = [1.0, 0.0, 0.0, 1.0]; // square is red
+    const color = [1.0, 0.0, 0.0, 1.0]; // square is red
 
     shader.setVec4("uColor", color);
+    shader.setVec2("offset2D", offsetSquare);
 
     gl.bindVertexArray(vao);
-    
-    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
     gl.drawArrays(gl.TRIANGLE_FAN, 0, 4);
 
     requestAnimationFrame(() => render());
@@ -86,19 +86,23 @@ function render() {
 
 function moveSquare(dx, dy) {
     // x bound check
-    if (vertices[0] + dx < -1.0 || vertices[3] + dx > 1.0) {
-        dx = 0;
+    if (initVertices[0] + offsetSquare[0] + dx < -1.0) {
+        dx = -1.0 - initVertices[0] - offsetSquare[0]; // left bound
+    }
+    if (initVertices[3] + offsetSquare[0] + dx > 1.0) {
+        dx = 1.0 - initVertices[3] - offsetSquare[0]; // right bound
     }
 
     // y bound check
-    if (vertices[1] + dy < -1.0 || vertices[7] + dy > 1.0) {
-        dy = 0;
+    if (initVertices[1] + offsetSquare[1] + dy < -1.0) {
+        dy = -1.0 - initVertices[1] - offsetSquare[1]; // bottom bound
+    }
+    if (initVertices[7] + offsetSquare[1] + dy > 1.0) {
+        dy = 1.0 - initVertices[7] - offsetSquare[1]; // top bound
     }
 
-    for (let i = 0; i < vertices.length; i += 3) {
-        vertices[i] += dx;
-        vertices[i + 1] += dy;
-    }
+    offsetSquare[0] += dx;
+    offsetSquare[1] += dy;
 }
 
 async function main() {
