@@ -59,6 +59,7 @@ function initWebGL() {
     canvas.height = 700;
 
     resizeAspectRatio(gl, canvas);
+    window.addEventListener('resize', () => { render() }); // 화면 크기가 조정될 때마다 render 함수를 호출하여 화면을 다시 그리도록 함
 
     gl.viewport(0, 0, canvas.width, canvas.height);
     gl.clearColor(0.1, 0.2, 0.3, 1.0);
@@ -146,7 +147,12 @@ function setupMouseEvents() {
                     ") ~ (" + lines[1][2].toFixed(2) + ", " + lines[1][3].toFixed(2) + ")");
 
                 calcIntersection(lines[0], lines[1]);
-                let text3 = "Intersection Points: " + intersectionPoints.length + " ";
+                let text3;
+                if (intersectionPoints.length == 0) {
+                    text3 = "No intersection";
+                } else {
+                    text3 = "Intersection Points: " + intersectionPoints.length + " ";
+                }
                 for (let i = 0; i < intersectionPoints.length; i++) {
                     text3 += "Point " + (i + 1).toString() + ": (" + intersectionPoints[i][0].toFixed(2) + ", " + intersectionPoints[i][1].toFixed(2) + ") ";
                 }
@@ -178,7 +184,6 @@ function render() {
             shaderCircle.setVec4("u_color", [1.0, 0.0, 1.0, 1.0]);
             shaderCircle.setVec2("center", [line[0], line[1]]);
             shaderCircle.setFloat("radius", dist(line[0], line[1], line[2], line[3]));
-            gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(line), gl.STATIC_DRAW);
             gl.bindVertexArray(vaoCircle);
             gl.drawArrays(gl.TRIANGLES, 0, 6)
         }
