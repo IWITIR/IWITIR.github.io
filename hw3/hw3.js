@@ -248,6 +248,8 @@ function dist(x1, y1, x2, y2) {
 // 교차점 이차방정식 계산
 function calcIntersection(circle, line) {
     const A = (line[2] - line[0]) ** 2 + (line[3] - line[1]) ** 2;
+    if (A === 0) return; // safe coding; A가 0이면 NaN이 나오는 것을 방지
+
     const B = 2 * ((line[2] - line[0]) * (line[0] - circle[0]) + (line[3] - line[1]) * (line[1] - circle[1]));
     const C = (line[0] - circle[0]) ** 2 + (line[1] - circle[1]) ** 2 - (circle[0] - circle[2])** 2 - (circle[1] - circle[3])** 2;
 
