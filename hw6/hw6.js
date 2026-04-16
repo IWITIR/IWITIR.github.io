@@ -135,7 +135,7 @@ function initWebGL() {
 
     // setup model matrices.
     mat4.translate(modelMatrix2, modelMatrix2, vec3.fromValues(2.0, 0.5, -3.0));
-    mat4.translate(modelMatrix3, modelMatrix3, vec3.fromValues(-1.5, 0.5, -2.5));
+    mat4.translate(modelMatrix3, modelMatrix3, vec3.fromValues(-1.5, -0.5, -2.5));
     mat4.translate(modelMatrix4, modelMatrix4, vec3.fromValues(3.0, 0.0, -4.0));
     mat4.translate(modelMatrix5, modelMatrix5, vec3.fromValues(-3.0, 0.0, 1.0));
     
@@ -227,7 +227,7 @@ function render() {
     // update view matrix
     mat4.lookAt(viewMatrix2, 
         cameraPos2, // from position (camera position)
-        vec3.add(vec3.create(), cameraPos2, cameraFront2), // target position 
+        vec3.fromValues(0,0,0), // target position is origin 
         cameraUp2); // up vector
 
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
