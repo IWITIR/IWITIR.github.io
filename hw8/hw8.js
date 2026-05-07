@@ -223,7 +223,7 @@ async function main() {
         mat4.scale(lampModelMatrix, lampModelMatrix, lightSize);
         lampShader.setMat4('u_model', lampModelMatrix);
 
-        setupText(canvas, "Smooth Shading", 1);
+        setupText(canvas, "Cone with Lighting", 1);
         textOverlay2 = setupText(canvas, "arcball mode: " + arcBallMode, 2);
         textOverlay3 = setupText(canvas, "shading mode: " + shadingMode + " (" + lightingModel + ")", 3);
         setupText(canvas, "press 'a' to change arcball mode", 4);
