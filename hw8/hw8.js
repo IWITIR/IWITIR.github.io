@@ -139,19 +139,23 @@ function render() {
         viewMatrix = arcball.getViewCamDistanceMatrix();
     }
 
+    let invViewMatrix = mat4.create();
+    mat4.invert(invViewMatrix, viewMatrix);
+    let dynamicCameraPos = vec3.fromValues(invViewMatrix[12], invViewMatrix[13], invViewMatrix[14]);
+
     // drawing the cone
     if (lightingModel == 'PHONG') {
         shaderPhong.use();  // using the cone's shader
         shaderPhong.setMat4('u_model', modelMatrix);
         shaderPhong.setMat4('u_view', viewMatrix);
-        shaderPhong.setVec3('u_viewPos', cameraPos);
+        shaderPhong.setVec3('u_viewPos', dynamicCameraPos);
         cone.draw(shaderPhong);
     }
     else if (lightingModel == 'GOURAUD') {
         shaderGouraud.use();  // using the cone's shader
         shaderGouraud.setMat4('u_model', modelMatrix);
         shaderGouraud.setMat4('u_view', viewMatrix);
-        shaderGouraud.setVec3('u_viewPos', cameraPos);
+        shaderGouraud.setVec3('u_viewPos', dynamicCameraPos);
         cone.draw(shaderGouraud);
     }
 
