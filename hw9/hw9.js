@@ -96,27 +96,22 @@ function setupKeyboardEvents() {
         else if (event.key == '1') {
             toonLevels = 1;
             updateText(textOverlay3, "toon levels: " + toonLevels);
-            render();
         }
         else if (event.key == '2') {
             toonLevels = 2;
             updateText(textOverlay3, "toon levels: " + toonLevels);
-            render();
         }
         else if (event.key == '3') {
             toonLevels = 3;
             updateText(textOverlay3, "toon levels: " + toonLevels);
-            render();
         }
         else if (event.key == '4') {
             toonLevels = 4;
             updateText(textOverlay3, "toon levels: " + toonLevels);
-            render();
         }
         else if (event.key == '5') {
             toonLevels = 5;
             updateText(textOverlay3, "toon levels: " + toonLevels);
-            render();
         }
     });
 }
