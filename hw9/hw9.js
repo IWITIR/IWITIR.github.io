@@ -214,7 +214,7 @@ async function main() {
         setupText(canvas, "TOON SHADING", 1);
         textOverlay2 = setupText(canvas, "arcball mode: " + arcBallMode, 2);
         textOverlay3 = setupText(canvas, "toon levels: " + toonLevels, 3);
-        setupText(canvas, "press 'a/r' to change/reset arcball mode", 4);
+        setupText(canvas, "press a/r to change/reset arcball mode", 4);
         setupText(canvas, "press 1 - 5 to change toon shading levels", 5);
 
         setupKeyboardEvents();
